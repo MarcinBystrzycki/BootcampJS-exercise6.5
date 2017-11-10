@@ -12,7 +12,7 @@ const UsersList = props => (
 				props.users.map((user) => {
 					return (
 						<li key={user.id} className={styles.UserItem}>
-							{user.name}
+							<img src={user.image} width="50px" height="50px"/> {user.name}
 						</li>
 					);
 				})
