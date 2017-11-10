@@ -12,7 +12,7 @@ const socket = io('/');
 class App extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {users: [], messages: [], text: '', name: '', image: ''};
+		this.state = {users: [], messages: [], text: '', name: ''};
 	}
 
 	componentDidMount() {
@@ -38,7 +38,6 @@ class App extends Component {
 	handleUserSubmit(name) {
 		this.setState({name});
 		socket.emit('join', name);
-		console.log(name);
 	}
 
 	render() {

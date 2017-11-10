@@ -24,8 +24,8 @@ var storage = multer.diskStorage({
 	},
 	filename: function(req, file, callback) {
 		console.log(file);
-		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
 		fileName = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+		callback(null, fileName);
 	}
 });
 
@@ -58,6 +58,7 @@ io.on('connection', function(socket) {
 		io.emit('update', {
 			users: userService.getAllUsers()
 		});
+		fileName = 0;
 	});
 
 	socket.on('disconnect', () => {
@@ -69,9 +70,11 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(message) {
 		const {name} = userService.getUserById(socket.id);
+		const {image} = userService.getUserById(socket.id);
 		socket.broadcast.emit('message', {
 			text: message.text,
-			from: name
+			from: name,
+			image: image
 		});
 	});
 });

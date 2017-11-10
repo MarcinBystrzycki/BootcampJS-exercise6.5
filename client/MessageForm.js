@@ -14,7 +14,8 @@ class MessageForm extends Component {
 		e.preventDefault(e);
 		const message = {
 			from: this.props.name,
-			text: this.state.text
+			text: this.state.text,
+			image: this.props.image
 		}
 		this.props.onMessageSubmit(message);
 		this.setState({
