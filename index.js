@@ -31,7 +31,17 @@ var storage = multer.diskStorage({
 
 app.post('/upload', function(req, res) {
 	var upload = multer({
-		storage: storage
+		storage: storage,
+		fileFilter: function (req, file, callback) {
+	        var ext = path.extname(file.originalname);
+	        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+	            return callback(new Error('Only images are allowed'))
+	        }
+	        callback(null, true)
+	    },
+    	limits: {
+        	fileSize: 1024 * 1024
+    	}
 	}).single('userFile')
 	upload(req, res, function(err) {
 		res.redirect('back');

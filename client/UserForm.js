@@ -6,7 +6,9 @@ const ImageUpload = props => (
 	<form className={styles.ImageUpload} action="/upload" encType="multipart/form-data" method="post">
 		<input type="file" name="userFile" />
 		<input type="submit" value="Upload your avatar"/>
+		<span> (Only images allowed, max size 1MB)</span>
 	</form>
+	
 );
 
 class UserForm extends Component {
