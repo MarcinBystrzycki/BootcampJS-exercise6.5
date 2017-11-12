@@ -14,14 +14,12 @@ const MessageList = props => (
 		{
 			props.messages.map((message) => {
 				return (
-					<div>
-						<Message
-							key={message.id}
-							image={message.image}
-							from={message.from}
-							text={message.text}
-						/>
-					</div>
+					<Message
+						key={message.id}
+						image={message.image}
+						from={message.from}
+						text={message.text}
+					/>
 				);
 			})
 		}
