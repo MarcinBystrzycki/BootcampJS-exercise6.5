@@ -13,11 +13,20 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {users: [], messages: [], text: '', name: ''};
+
+		this.messageReceive = this.messageReceive.bind(this);
+		this.chatUpdate = this.chatUpdate.bind(this);
 	}
 
 	componentDidMount() {
 		socket.on('message', message => this.messageReceive(message));
-		socket.on('update', ({users}) => this.chatUpdate(users));
+		socket.on('update', ({users}) => this.chatUpdate(users));		
+	}
+
+	componentWillUnmount() {
+		socket.removeListener('message', this.messageReceive);
+		socket.removeListener('update', this.chatUpdate);
+		socket.close();
 	}
 
 	messageReceive(message) {
@@ -29,9 +38,7 @@ class App extends Component {
 		this.setState({users});
 	}
 
-	handleMessageSubmit(message) {
-		const messages = [message, ...this.state.messages];
-		this.setState({messages});
+	handleMessageSubmit(message) {		
 		socket.emit('message', message);
 	}
 

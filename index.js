@@ -4,7 +4,7 @@ const socketIo = require('socket.io');
 const UsersService = require('./UsersService');
 const path = require('path');
 const multer = require('multer');
-
+const uuidv4 = require('uuid/v4');
 
 const userService = new UsersService();
 const app = express();
@@ -69,9 +69,9 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('message', function(message) {
-		const {name} = userService.getUserById(socket.id);
-		const {image} = userService.getUserById(socket.id);
-		socket.broadcast.emit('message', {
+		const {name, image} = userService.getUserById(socket.id);
+		io.sockets.emit('message', {
+			id: uuidv4(),
 			text: message.text,
 			from: name,
 			image: image
